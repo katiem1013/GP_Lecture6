@@ -13,6 +13,7 @@ moving_down = False  # sets the moving down variable so that the circle can move
 center_x = list(screen.get_size())[0]/2  # finds the center of the screen
 raindrop_speed = 1
 raindrop_y = 0
+cloud = pygame.image.load('cloud.png').convert()
 
 
 class Raindrops:
@@ -58,7 +59,7 @@ while True:
     raindrop_y += raindrop_speed  # speeds the raindrop up
     raindrop_speed += 0.5  # adds to the raindrop speed position
 
-    if raindrop_y > list(screen.get_size())[1]:  # gets the bottom of the screen and resets postion and speed
+    if raindrop_y > list(screen.get_size())[1]:  # gets the bottom of the screen and resets position and speed
         raindrop_y = 0
         raindrop_speed = 1
 
@@ -67,6 +68,7 @@ while True:
 
     if moving_down is True:  # other way to move the circle
         y_pos += 1
+
 
     drop.Draw()
     drop.Move()

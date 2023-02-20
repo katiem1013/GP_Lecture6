@@ -7,16 +7,15 @@ pygame.display.set_caption("Hello World")
 screen = pygame.display.set_mode((1080, 960))
 clock = pygame.time.Clock()  # clock to set the frame rate
 
-cloud_image = pygame.image.load('download.png').convert_alpha()
-cloud_y = 0
-cloud_x = screen.get_size()[1]/2
+ship_image = pygame.image.load('Ship.png').convert_alpha()
+ship_y = 0
+ship_x = screen.get_size()[1]/2
 
-player_surf = pygame.image.load('hooman_umbrella.png').convert_alpha()
-player_surf.set_colorkey((255, 255, 255))
+player_surf = pygame.image.load('InvaderA1.png').convert_alpha()
 player_rect = player_surf.get_rect(topleft = (540, 500))
 
 
-class Raindrops:
+class Ships:
     def __init__(self, xpos, ypos):
         self.xpos = xpos
         self.ypos = ypos
@@ -37,12 +36,12 @@ class Raindrops:
             self.active = False
 
         if self.ypos > list(screen.get_size())[1]:
-            y_min = cloud_y + cloud_image.get_size()[1] / 2
-            y_max = cloud_y + cloud_image.get_size()[1]
+            y_min = ship_y + ship_image.get_size()[1] / 2
+            y_max = ship_y + ship_image.get_size()[1]
             self.ypos = random.randrange(200, 700)
-            self.raindrop_speed = 1
-            range = cloud_image.get_size()[0]
-            self.xpos = random.randrange(cloud_y + 150, range - 150)
+            self.ships_speed = 1
+
+            self.xpos = random.randrange(100, 150)
             self.active = True
 
     def Draw(self):
@@ -50,13 +49,13 @@ class Raindrops:
             pygame.draw.circle(screen, (50, 50, 100), (self.xpos, self.ypos), 5)
 
 
-drops = []
+bullets = []
 for x in range(100):
-    random_x = random.randrange(cloud_x, cloud_x + cloud_image.get_size()[0])
-    y_min = cloud_y + cloud_image.get_size()[1] / 2
-    y_max = cloud_y + cloud_image.get_size()[1]
-    random_y = random.randrange(cloud_y, 700)
-    drops.append(Raindrops(random_x, random_y))
+    random_x = random.randrange(ship_x, ship_x + ship_image.get_size()[0])
+    y_min = ship_y + ship_image.get_size()[1] / 2
+    y_max = ship_y + ship_image.get_size()[1]
+    random_y = random.randrange(ship_y, 700)
+    bullets.append(Ships(random_x, random_y))
 
 
 while True:
@@ -66,11 +65,11 @@ while True:
 
     screen.fill((100, 100, 100))  # sets the screen colour
 
-    for drop in drops:
+    for drop in bullets:
         drop.Draw()
         drop.Move()
 
-    screen.blit(cloud_image, (0, -150))
+    screen.blit(ship_image, (100, 150))
     screen.blit(player_surf, player_rect)
 
     pygame.display.flip()  # might not need if background is rendering last
